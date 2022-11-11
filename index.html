@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Calculator v.1.0</title>
+        <link rel="stylesheet" href="style1.css">
+    </head>
+    <body>
+        <div id="header">
+            <!-- dropdown menu -->
+        </div>
+        <div id="header-bar"></div>
+        <div id="result-container"><span id="result"></span></div>
+        <div id="calculator-grid">
+            <button class="button operator" id="grid-item1">C</button>
+            <div class="button" id="EMPTY"></div>
+            <button class="button operator" id="grid-item2">÷</button>
+            <button class="button operator" id="grid-item3">x</button>
+            <button class="button number" id="grid-item4">7</button>
+            <button class="button number" id="grid-item5">8</button>
+            <button class="button number" id="grid-item6">9</button>
+            <button class="button operator" id="grid-item7">-</button>
+            <button class="button number" id="grid-item8" onclick="append_value('4')">4</button>
+            <button class="button number" id="grid-item9" onclick="append_value('5')">5</button>
+            <button class="button number" id="grid-item10" onclick="append_value('6')">6</button>
+            <button class="button operator" id="grid-item11" onclick="operate('+')">+</button>
+            <button class="button number" id="grid-item12" onclick="append_value('1')">1</button>
+            <button class="button number" id="grid-item13" onclick="append_value('2')">2</button>
+            <button class="button number" id="grid-item14" onclick="append_value('3')">3</button>
+            <button class="button operator" id="grid-item15" onclick="solve()">=</button>
+            <button class="button number" id="grid-item16" onclick="append_value('0')">0</button>
+            <button class="button number" id="grid-item17">.</button>
+        </div>
+        <script src="scripts.js"></script>
+    </body>
+</html>
