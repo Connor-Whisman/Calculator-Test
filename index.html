@@ -11,10 +11,10 @@
         <!-- TOP SPACE -->
         <div id="header">
             <!-- DROPDOWN MENU -->
-            <div onclick="myFunction()" id="menu-icon"></div>
+            <div onclick="toggleMenu()" id="menu-icon"></div>
             <div id="dropdown" class="menu-content">
-                <a href="#">Log</a>
-                <a href="#">Options</a>
+                <a id='select-log' onclick="openLog()">Log</a>
+                <a onclick="donothing">Options</a>
             </div>
         </div>
         <div id="header-bar"></div>
@@ -43,8 +43,21 @@
                 <button class="button number" id="grid-item17" onclick="append_value('.')">.</button>
             </div>
         </div>
+        <!-- MODAL FOR CALCULATIONS LOG -->
+        <div id="log-modal" class="modal">
+            <div class="modal-content">
+              <span class="close" onclick="closeLog()">&times;</span>
+              <table id="log-table">
+                <tr>
+                    <th>Time</th>
+                    <th>Calculation</th>
+                </tr>
+              </table>
+            </div>
+        </div>
         <!-- JAVASCRIPT LINKS -->
         <script src="scripts/calc_logic.js"></script>
         <script src="scripts/menu.js"></script>
+        <script src="scripts/log.js"></script>
     </body>
 </html>

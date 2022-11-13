@@ -30,7 +30,7 @@ function operate(symbol) {
 function solve() {
     if (operator == undefined) {
         clear_output();
-        return
+        return;
     }
     var pre_solve = input1;
     input1 = switch_case();
@@ -40,17 +40,27 @@ function solve() {
 }
 
 // PERFORM CORRECT OPERATION DEPENDING ON WHICH BUTTON WAS PRESSED (CALLED IN 'OPERATE' AND 'SOLVE' FUNCTIONS)
+// SHORTEN SCIENTIFIC NOTATION NUMBERS
 function switch_case() {
+    var answer;
     switch(operator) {
         case '+':
-            return String(parseFloat(input2) + parseFloat(input1));
+            answer = String(parseFloat(input2) + parseFloat(input1));
+            break;
         case '-':
-            return String(parseFloat(input2) - parseFloat(input1));
+            answer = String(parseFloat(input2) - parseFloat(input1));
+            break;
         case '*':
-            return String(parseFloat(input2) * parseFloat(input1));
+            answer = String(parseFloat(input2) * parseFloat(input1));
+            break;
         case '/':
-            return String(parseFloat(input2) / parseFloat(input1));
+            answer = String(parseFloat(input2) / parseFloat(input1));
+            break;
     }
+    if (answer.includes('e+')) {
+        answer = String(parseFloat(answer).toPrecision(8));
+    }
+    return answer;
 }
 
 // ADDS ABILITY TO SWITCH BETWEEN POSITIVE AND NEGATIVE NUMBERS
@@ -63,13 +73,22 @@ function inverter() {
 
 // KEEPS TRACK OF EVERY TIME A CALCULATION IS PERFORMED (CALLED IN 'OPERATE' AND 'SOLVE' FUNCTIONS)
 function log_calculation(n2, op, n1, sol) {
-    console.log(String(n2 + op + n1 + '=' + sol));
+    var log = String(n2 + op + n1 + '=' + sol);
+    var now = new Date();
+    var time = now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds();
+    console.log(log);
+
+    var logTable = document.getElementById("log-table");
+    var row = logTable.insertRow(1);
+    row.insertCell(0).innerHTML = time;
+    row.insertCell(1).innerHTML = log;
 }
 
 // ---------------------------- UPDATE / DISPLAY FUNCTIONS ---------------------------------------
-// ADD VALUES TO OUTPUT (CHECK FOR REPEATED DECIMAL INPUTS)
+// ADD VALUES TO OUTPUT (CHECK FOR REPEATED DECIMAL INPUTS | MAX OF 20-DIGIT NUMBER)
 function append_value(char) {
     if (input1.includes('.') && char == '.') return;
+    if (input1.length > 20) return;
     if (input1 == '0') {
         if (char == '.') {
             input1 += char;
@@ -81,6 +100,7 @@ function append_value(char) {
     else {
         input1 += char;
     }
+    
     updateView(input1);
 }
 // RESETS CALCULATOR
@@ -95,7 +115,7 @@ function clear_output() {
 function updateView(show) {
     if (show == 'NaN') {
         clear_output();
-        return
+        return;
     }
     document.getElementById("result").innerHTML = show;
 }
