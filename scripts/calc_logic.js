@@ -3,6 +3,9 @@ var input1 = '0';
 var input2;
 var operator;
 
+var lastAction;
+var lastBtn;
+
 // SET INITIAL OUTPUT TO '0'
 updateView(input1);
 
@@ -10,6 +13,11 @@ updateView(input1);
 // ADD OPERATOR TO OUTPUT (AND DO CALCULATION IF WE HAVE TWO INPUTS)
 function operate(symbol) {
     // CALCULATE
+    if (lastBtn == 'operator') {
+        operator = symbol;
+        return;
+    }
+    
     if (operator !== undefined && input2 !== undefined) {
         var pre_solve = input2;
         input2 = switch_case();
@@ -24,6 +32,7 @@ function operate(symbol) {
     // RESET AFTER EITHER CASE
     input1 = '0';
     operator = symbol;
+    lastBtn = 'operator';
 }
 
 // SOLVE IF EQUAL BUTTON IS PRESSED (RESET IF WE DONT HAVE AN OPERATOR AND BOTH INPUTS)
@@ -60,6 +69,7 @@ function switch_case() {
     if (answer.includes('e+')) {
         answer = String(parseFloat(answer).toPrecision(8));
     }
+    lastAction = 'solve';
     return answer;
 }
 
@@ -89,6 +99,9 @@ function log_calculation(n2, op, n1, sol) {
 function append_value(char) {
     if (input1.includes('.') && char == '.') return;
     if (input1.length > 20) return;
+    if (lastAction == 'solve') {
+        input1 = '0';
+    }
     if (input1 == '0') {
         if (char == '.') {
             input1 += char;
@@ -100,7 +113,8 @@ function append_value(char) {
     else {
         input1 += char;
     }
-    
+    lastAction = 'append';
+    lastBtn = 'value';
     updateView(input1);
 }
 // RESETS CALCULATOR
