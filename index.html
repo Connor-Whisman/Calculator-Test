@@ -1,22 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <!-- SETTINGS & CSS LINK -->
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Calculator v.1.0</title>
         <link rel="stylesheet" href="styles/default.css">
     </head>
     <body>
+        <!-- TOP SPACE -->
         <div id="header">
             <!-- DROPDOWN MENU -->
             <div onclick="myFunction()" id="menu-icon"></div>
-            <div id="myDropdown" class="menu-content">
+            <div id="dropdown" class="menu-content">
                 <a href="#">Log</a>
                 <a href="#">Options</a>
             </div>
         </div>
         <div id="header-bar"></div>
+        <!-- CALCULATOR OUTPUT -->
         <div id="result-container"><span id="result"></span></div>
+        <!-- CALCULATOR INPUTS -->
         <div id="grid-container">
             <div id="calculator-grid">
                 <button class="button special" id="grid-item1" onclick="clear_output()">C</button>
@@ -39,6 +43,7 @@
                 <button class="button number" id="grid-item17" onclick="append_value('.')">.</button>
             </div>
         </div>
+        <!-- JAVASCRIPT LINKS -->
         <script src="scripts/calc_logic.js"></script>
         <script src="scripts/menu.js"></script>
     </body>
