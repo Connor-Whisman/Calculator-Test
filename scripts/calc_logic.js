@@ -2,59 +2,51 @@
 var initialInput = '0';
 var recentInput;
 var operator;
-
-var pre_solve
 var lastAction;
-var lastBtn;
 
-// DISPLAY OUTPUT '0' ON STARTUP
 updateOutput(initialInput);
 
-// -------------------------------- LOGICAL FUNCTIONS --------------------------------------------
-// ADD OPERATOR TO OUTPUT (AND DO CALCULATION IF WE HAVE TWO INPUTS)
-function operate(symbol) {
+// ------ LOGICAL FUNCTIONS ------
+function updateOperator(symbol) {
     // IGNORE CALCULATION IF USER SWITCHES OPERATOR
-    if (lastBtn == 'operator') {
+    if (lastAction == 'operator') {
         operator = symbol;
         return;
     }
     // CALCULATE
     if (operator !== undefined && recentInput !== undefined) {
-        pre_solve = recentInput;
-        recentInput = getSolution();
-        logCalculation(pre_solve, operator, initialInput, recentInput);
-        updateOutput(recentInput);
+        getSolution(recentInput);
     }
-    // STORE INITIAL INPUT TO PREPARE FOR SECOND INPUT 
+    // STORE INITIAL INPUT
     else {
         recentInput = initialInput;
         updateOutput(initialInput);
     }
-    // RESET AFTER EITHER CASE
     initialInput = '0';
     operator = symbol;
-    lastBtn = 'operator';
+    lastAction = 'operator';
 }
-
-// SOLVE IF EQUAL BUTTON IS PRESSED (RESET IF WE DONT HAVE AN OPERATOR AND BOTH INPUTS)
-function solve() {
+function getSolution(input) {
     if (operator == undefined) {
         clearInputOutput();
         return;
     }
-    else {
-    pre_solve = initialInput;
-    initialInput = getSolution();
-    updateOutput(initialInput);
-    logCalculation(recentInput, operator, pre_solve, initialInput);
-    operator = undefined;
+    // USER CLICKED '=' BUTTON
+    if (input == initialInput) {
+        initialInput = calculate();
+        logCalculation(recentInput, operator, input, initialInput);
+        updateOutput(initialInput);
     }
+    // USER DOING NEW CALCULATION ON RESULT OF THE PREVIOUS ONE 
+    else {
+        recentInput = calculate();
+        logCalculation(input, operator, initialInput, recentInput);
+        updateOutput(recentInput);
+    }
+    operator = undefined;
 }
-
-// PERFORM CORRECT OPERATION DEPENDING ON WHICH BUTTON WAS PRESSED (CALLED IN 'OPERATE' AND 'SOLVE' FUNCTIONS)
-// SHORTEN SCIENTIFIC NOTATION NUMBERS
-function getSolution() {
-    var answer;
+function calculate() {
+    let answer;
     switch(operator) {
         case '+':
             answer = String(parseFloat(recentInput) + parseFloat(initialInput));
@@ -69,6 +61,7 @@ function getSolution() {
             answer = String(parseFloat(recentInput) / parseFloat(initialInput));
             break;
     }
+    // SHORTEN SCIENTIFIC NOTATION NUMBERS
     if (answer.includes('e+')) {
         answer = String(parseFloat(answer).toPrecision(8));
     }
@@ -76,44 +69,35 @@ function getSolution() {
     return answer;
 }
 
-// ADDS ABILITY TO SWITCH BETWEEN POSITIVE AND NEGATIVE NUMBERS
+// ------- INPUT / OUTPUT FUNCTIONS ------
+function updateInput(char) {
+    // CHECK FOR REPEATED DECIMAL INPUTS | MAX OF 18-DIGIT NUMBER | DONT APPEND DIGITS TO A RESULT
+    if (lastAction !== 'append') {initialInput = '0'}
+    if ((initialInput.includes('.') && char == '.') || initialInput.length > 18) return;
+    if (initialInput == '0') {
+        if (char == '.') {
+            initialInput += char;
+        } else {
+            initialInput = char;
+        }
+    } else {
+        initialInput += char;
+    }
+    lastAction = 'append';
+    updateOutput(initialInput);
+}
 function invertInput() {
     if (initialInput !== '0') {
         initialInput = initialInput * (-1);
         updateOutput(initialInput);
     }
 }
-// ------- UPDATE / DISPLAY FUNCTIONS ------
-// CHECK FOR REPEATED DECIMAL INPUTS | MAX OF 18-DIGIT NUMBER
-function updateInput(char) {
-    if (initialInput.includes('.') && char == '.') return;
-    if (initialInput.length > 18) return;
-    if (lastAction !== 'append') {
-        initialInput = '0';
-    }
-    if (initialInput == '0') {
-        if (char == '.') {
-            initialInput += char;
-        }
-        else {
-            initialInput = char;
-        }
-    }
-    else {
-        initialInput += char;
-    }
-    lastAction = 'append';
-    lastBtn = 'value';
-    updateOutput(initialInput);
-}
-
 function clearInputOutput() {
     initialInput = '0';
     recentInput = undefined;
     operator = undefined;
     updateOutput(initialInput);
 }
-
 function updateOutput(show) {
     // CHECK FOR NON NUMBERS BEFORE DISPLAYING EX: 0/0=NaN
     if (show == 'NaN') {
