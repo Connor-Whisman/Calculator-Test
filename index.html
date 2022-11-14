@@ -1,46 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <!-- SETTINGS & CSS LINK -->
+        <!--- SETTINGS & CSS --->
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Calculator v.1.0</title>
         <link rel="stylesheet" href="styles/default.css">
     </head>
     <body>
-        <!-- TOP SPACE -->
+        <!--- HEADER SPACE & DROPDOWN MENU --->
         <div id="header">
-            <!-- DROPDOWN MENU -->
-            <div onclick="toggleMenu()" id="menu-icon"></div>
-            <div id="dropdown" class="menu-content">
+            <div onclick="openMenu()" id="menu-icon"></div>
+            <div id="menu-dropdown" class="menu-content">
                 <a id='select-log' onclick="openLog()">Log</a>
                 <a onclick="donothing">Options</a>
             </div>
         </div>
         <div id="header-bar"></div>
         <!-- CALCULATOR OUTPUT -->
-        <div id="result-container"><span id="result"></span></div>
+        <div id="output-container"><span id="output"></span></div>
         <!-- CALCULATOR INPUTS -->
         <div id="grid-container">
             <div id="calculator-grid">
-                <button class="button special" id="grid-item1" onclick="clear_output()">C</button>
-                <button class="button special" onclick="inverter()">-+</button>
-                <button class="button operator focused" id="grid-item2" onclick="operate('/')">÷</button>
-                <button class="button operator focused" id="grid-item3" onclick="operate('*')">x</button>
-                <button class="button number" id="grid-item4" onclick="append_value('7')">7</button>
-                <button class="button number" id="grid-item5" onclick="append_value('8')">8</button>
-                <button class="button number" id="grid-item6" onclick="append_value('9')">9</button>
-                <button class="button operator focused" id="grid-item7" onclick="operate('-')">-</button>
-                <button class="button number" id="grid-item8" onclick="append_value('4')">4</button>
-                <button class="button number" id="grid-item9" onclick="append_value('5')">5</button>
-                <button class="button number" id="grid-item10" onclick="append_value('6')">6</button>
-                <button class="button operator focused" id="grid-item11" onclick="operate('+')">+</button>
-                <button class="button number" id="grid-item12" onclick="append_value('1')">1</button>
-                <button class="button number" id="grid-item13" onclick="append_value('2')">2</button>
-                <button class="button number" id="grid-item14" onclick="append_value('3')">3</button>
-                <button class="button operator" id="grid-item15" onclick="solve()">=</button>
-                <button class="button number" id="grid-item16" onclick="append_value('0')">0</button>
-                <button class="button number" id="grid-item17" onclick="append_value('.')">.</button>
+                <button class="button special"  onclick="clearInputOutput()">C</button>
+                <button class="button special"  onclick="invertInput()">-/+</button>
+                <button class="button operator" onclick="operate('/')">÷</button>
+                <button class="button operator" onclick="operate('*')">x</button>
+                <button class="button number"   onclick="updateInput('7')">7</button>
+                <button class="button number"   onclick="updateInput('8')">8</button>
+                <button class="button number"   onclick="updateInput('9')">9</button>
+                <button class="button operator" onclick="operate('-')">-</button>
+                <button class="button number"   onclick="updateInput('4')">4</button>
+                <button class="button number"   onclick="updateInput('5')">5</button>
+                <button class="button number"   onclick="updateInput('6')">6</button>
+                <button class="button operator" onclick="operate('+')">+</button>
+                <button class="button number"   onclick="updateInput('1')">1</button>
+                <button class="button number"   onclick="updateInput('2')">2</button>
+                <button class="button number"   onclick="updateInput('3')">3</button>
+                <button class="button" id="button-equals" onclick="solve()">=</button>
+                <button class="button number" id="button-zero" onclick="updateInput('0')">0</button>
+                <button class="button number"   onclick="updateInput('.')">.</button>
             </div>
         </div>
         <!-- MODAL FOR CALCULATIONS LOG -->
@@ -55,9 +54,8 @@
               </table>
             </div>
         </div>
-        <!-- JAVASCRIPT LINKS -->
+        <!--- JAVASCRIPT --->
         <script src="scripts/calc_logic.js"></script>
         <script src="scripts/menu.js"></script>
-        <script src="scripts/log.js"></script>
     </body>
 </html>

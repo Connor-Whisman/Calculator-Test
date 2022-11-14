@@ -1,36 +1,37 @@
-// VARIABLES USED FOR CALCULATIONS
-var input1 = '0';
-var input2;
+// VARIABLES
+var initialInput = '0';
+var recentInput;
 var operator;
 
+var pre_solve
 var lastAction;
 var lastBtn;
 
-// SET INITIAL OUTPUT TO '0'
-updateView(input1);
+// DISPLAY OUTPUT '0' ON STARTUP
+updateOutput(initialInput);
 
 // -------------------------------- LOGICAL FUNCTIONS --------------------------------------------
 // ADD OPERATOR TO OUTPUT (AND DO CALCULATION IF WE HAVE TWO INPUTS)
 function operate(symbol) {
-    // CALCULATE
+    // IGNORE CALCULATION IF USER SWITCHES OPERATOR
     if (lastBtn == 'operator') {
         operator = symbol;
         return;
     }
-    
-    if (operator !== undefined && input2 !== undefined) {
-        var pre_solve = input2;
-        input2 = switch_case();
-        log_calculation(pre_solve, operator, input1, input2);
-        updateView(input2);
+    // CALCULATE
+    if (operator !== undefined && recentInput !== undefined) {
+        pre_solve = recentInput;
+        recentInput = getSolution();
+        logCalculation(pre_solve, operator, initialInput, recentInput);
+        updateOutput(recentInput);
     }
     // STORE INITIAL INPUT TO PREPARE FOR SECOND INPUT 
     else {
-        input2 = input1;
-        updateView(input1);
+        recentInput = initialInput;
+        updateOutput(initialInput);
     }
     // RESET AFTER EITHER CASE
-    input1 = '0';
+    initialInput = '0';
     operator = symbol;
     lastBtn = 'operator';
 }
@@ -38,98 +39,105 @@ function operate(symbol) {
 // SOLVE IF EQUAL BUTTON IS PRESSED (RESET IF WE DONT HAVE AN OPERATOR AND BOTH INPUTS)
 function solve() {
     if (operator == undefined) {
-        clear_output();
+        clearInputOutput();
         return;
     }
-    var pre_solve = input1;
-    input1 = switch_case();
-    updateView(input1);
-    log_calculation(input2, operator, pre_solve, input1);
+    else {
+    pre_solve = initialInput;
+    initialInput = getSolution();
+    updateOutput(initialInput);
+    logCalculation(recentInput, operator, pre_solve, initialInput);
     operator = undefined;
+    }
 }
 
 // PERFORM CORRECT OPERATION DEPENDING ON WHICH BUTTON WAS PRESSED (CALLED IN 'OPERATE' AND 'SOLVE' FUNCTIONS)
 // SHORTEN SCIENTIFIC NOTATION NUMBERS
-function switch_case() {
+function getSolution() {
     var answer;
     switch(operator) {
         case '+':
-            answer = String(parseFloat(input2) + parseFloat(input1));
+            answer = String(parseFloat(recentInput) + parseFloat(initialInput));
             break;
         case '-':
-            answer = String(parseFloat(input2) - parseFloat(input1));
+            answer = String(parseFloat(recentInput) - parseFloat(initialInput));
             break;
         case '*':
-            answer = String(parseFloat(input2) * parseFloat(input1));
+            answer = String(parseFloat(recentInput) * parseFloat(initialInput));
             break;
         case '/':
-            answer = String(parseFloat(input2) / parseFloat(input1));
+            answer = String(parseFloat(recentInput) / parseFloat(initialInput));
             break;
     }
     if (answer.includes('e+')) {
         answer = String(parseFloat(answer).toPrecision(8));
     }
-    lastAction = 'solve';
+    lastAction = operator;
     return answer;
 }
 
 // ADDS ABILITY TO SWITCH BETWEEN POSITIVE AND NEGATIVE NUMBERS
-function inverter() {
-    if (input1 !== '0') {
-        input1 = input1 * (-1);
-        updateView(input1);
+function invertInput() {
+    if (initialInput !== '0') {
+        initialInput = initialInput * (-1);
+        updateOutput(initialInput);
     }
 }
-
-// KEEPS TRACK OF EVERY TIME A CALCULATION IS PERFORMED (CALLED IN 'OPERATE' AND 'SOLVE' FUNCTIONS)
-function log_calculation(n2, op, n1, sol) {
-    var log = String(n2 + op + n1 + '=' + sol);
-    var now = new Date();
-    var time = now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds();
-    console.log(log);
-
-    var logTable = document.getElementById("log-table");
-    var row = logTable.insertRow(1);
-    row.insertCell(0).innerHTML = time;
-    row.insertCell(1).innerHTML = log;
-}
-
-// ---------------------------- UPDATE / DISPLAY FUNCTIONS ---------------------------------------
-// ADD VALUES TO OUTPUT (CHECK FOR REPEATED DECIMAL INPUTS | MAX OF 20-DIGIT NUMBER)
-function append_value(char) {
-    if (input1.includes('.') && char == '.') return;
-    if (input1.length > 20) return;
-    if (lastAction == 'solve') {
-        input1 = '0';
+// ------- UPDATE / DISPLAY FUNCTIONS ------
+// CHECK FOR REPEATED DECIMAL INPUTS | MAX OF 18-DIGIT NUMBER
+function updateInput(char) {
+    if (initialInput.includes('.') && char == '.') return;
+    if (initialInput.length > 18) return;
+    if (lastAction !== 'append') {
+        initialInput = '0';
     }
-    if (input1 == '0') {
+    if (initialInput == '0') {
         if (char == '.') {
-            input1 += char;
+            initialInput += char;
         }
         else {
-            input1 = char;
+            initialInput = char;
         }
     }
     else {
-        input1 += char;
+        initialInput += char;
     }
     lastAction = 'append';
     lastBtn = 'value';
-    updateView(input1);
+    updateOutput(initialInput);
 }
-// RESETS CALCULATOR
-function clear_output() {
-    input1 = '0';
-    input2 = undefined;
+
+function clearInputOutput() {
+    initialInput = '0';
+    recentInput = undefined;
     operator = undefined;
-    updateView(input1);
-    console.log('Cleared.');
+    updateOutput(initialInput);
 }
-// CALLED EVERYTIME THE OUTPUT IS UPDATED (CHECKS FOR NON NUMBERS EX: 0/0=NaN, AND RESETS CALCULATOR)
-function updateView(show) {
+
+function updateOutput(show) {
+    // CHECK FOR NON NUMBERS BEFORE DISPLAYING EX: 0/0=NaN
     if (show == 'NaN') {
-        clear_output();
+        clearInputOutput();
         return;
     }
-    document.getElementById("result").innerHTML = show;
+    document.getElementById("output").innerHTML = show;
+}
+
+// ------ LOG FUNCTIONS ------
+function logCalculation(recentInput, operand, initialInput, solution) {
+    let now = new Date();
+    let time = `${addZero(now.getHours())}:${addZero(now.getMinutes())}:${addZero(now.getSeconds())}`;
+    let log = `${addParenthesis(recentInput)} ${operand} ${addParenthesis(initialInput)} = ${solution}`;
+    
+    let tableRow = document.getElementById("log-table").insertRow(1);
+    tableRow.insertCell(0).innerHTML = time;
+    tableRow.insertCell(1).innerHTML = log;
+}
+function addZero(input) {
+    if (input < 10) {input = '0' + input}
+    return input;
+}
+function addParenthesis(input) {
+    if (input < 0) {input = `(${input})`}
+    return input;
 }

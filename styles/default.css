@@ -5,8 +5,8 @@ body, html {
     margin: 0;
     padding: 0;
 }
-/* ------------------ DEFAULT STYLING --------------------*/
-/* SPACE AT THE TOP OF SCREEN */
+
+/* ------------------ DEFAULT STYLING ------------------*/
 #header {
     background-color: rgb(85, 70, 145);
     width: 100vw;
@@ -22,15 +22,15 @@ body, html {
     bottom: 0;
     background-color: rgb(35, 30, 65);
 }
-/* OUTPUT */
-#result-container {
+/* --- CALCULATOR OUTPUT --- */
+#output-container {
     height: 10vh;
     line-height: 10vh;
     width: 90vw;
     margin: 10vh 5vw 5vh 5vw;
     border-bottom: 2px solid white;
 }
-#result {
+#output {
     vertical-align: middle;
     width: 100%;
     height: 100%;
@@ -40,7 +40,7 @@ body, html {
     overflow: visible;
     color: white;
 }
-/* GRID FOR CALCULATOR INPUTS, BUTTON STYLING */
+/* --- CALCULATOR INPUTS --- */
 #grid-container {
     height: 50vh;
     margin: 7vh 5vw 0 5vw;
@@ -55,13 +55,6 @@ body, html {
     grid-row-gap: 2%;
     justify-content: center;
 }
-#grid-item15 {
-    grid-column: 4;
-    grid-row: span 2;
-}
-#grid-item16 {
-    grid-column: 1 / span 2;
-}
 .button {
     font-size: 5vh;
     border-radius: 50vw;
@@ -69,7 +62,27 @@ body, html {
 .button:active {
     background-color: rgb(85, 70, 145);
 }
-.focused:focus {
+#button-zero {
+    grid-column: 1 / span 2;
+}
+#button-equals {
+    grid-column: 4;
+    grid-row: span 2;
+    background-color: rgb(250, 190, 75);
+    color: rgb(60, 50, 110);
+    border: none;
+}
+#button-equals:active {
+    background-color: rgb(85, 70, 145);
+    border: 2px solid white;
+    color: white;
+}
+.operator {
+    background-color: rgb(250, 190, 75);
+    color: rgb(60, 50, 110);
+    border: none;
+}
+.operator:focus {
     background-color: rgb(85, 70, 145);
     border: 2px solid white;
     color: white;
@@ -79,18 +92,13 @@ body, html {
     color: white;
     border: 2px solid white;
 }
-.operator {
-    background-color: rgb(250, 190, 75);
-    color: rgb(60, 50, 110);
-    border: none;
-}
 .special {
     background-color: rgb(60, 50, 110);
     color: white;
     border: 2px solid rgb(250, 190, 75);
 }
 
-/* -------------------- MENU ICON AND CONTENT--------------------------------- */
+/* ------------------ MENU ------------------ */
 #menu-icon {
     width: 10vmin;
     height: 10vmin;
@@ -102,7 +110,6 @@ body, html {
     background-size: 100% 100%;
     
 }
-/* DROPDOWN LIST FOR MENU */
 .menu-content {
     margin-left: 5vmin;
     display: none;
@@ -120,16 +127,16 @@ body, html {
     min-width: 25vmin;
     font-weight: bold;
 }
-/* TOGGLE CLASS TO ROTATE MENU ICON */
+/* --- TOGGLE CLASS TO ROTATE MENU ICON --- */
 .rotate-menu {
     transform: rotate(90deg);
 }
-/* TOGGLE CLASS TO DISPLAY MENU CONTENT */
+/* --- TOGGLE CLASS TO DISPLAY MENU CONTENT --- */
 .show {
     display:block;
 }
 
-/* --------------- MODALS FOR LOG ENTRIES AND SETTINGS ---------------------- */
+/* ------------------ LOG MODAL ------------------ */
 .modal {
     display: none;
     position: fixed;
@@ -149,7 +156,6 @@ body, html {
     padding: 5%;
     width: 80vw;
 }
-/* CLOSE MODAL */
 .close {
     color: black;
     float: right;
@@ -161,16 +167,15 @@ body, html {
     text-decoration: none;
     cursor: pointer;
 }
-/* ------- LOG --------*/
 #log-table {
-    border: 1px solid black;
     border-collapse: collapse;
     width: 80vw;
 } 
-#log_table th, td {
+#log_table, th, td {
     border: 1px solid black;
     text-align: center;
+    overflow: auto;
 }
 #log-table tr {
-    height: 35px;
+    height: 10vh;
 }

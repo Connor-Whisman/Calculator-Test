@@ -1,29 +1,31 @@
-// ROTATE THE MENU ICON AND TOGGLE DROPDOWN
-function toggleMenu() {
-    document.getElementById("menu-icon").classList.toggle("rotate-menu");
-    document.getElementById("dropdown").classList.toggle("show");
-}
-  
-// LISTEN FOR CLICK EVENTS
+// VARIABLES
+var menuIcon = document.getElementById("menu-icon");
+var menuDropdown = document.getElementById("menu-dropdown");
+var logModal = document.getElementById("log-modal");
+
+
+// EVENTS
 window.onclick = function(event) {
-    // IF USER CLICKS OUTSIDE OF DROPDOWN AREA, CLOSE THE MENU
+    // CLOSE MENU
     if (!event.target.matches('#menu-icon')) {
-        document.getElementById("menu-icon").classList.remove('rotate-menu');
-        document.getElementById("dropdown").classList.remove("show");
+        menuIcon.classList.remove('rotate-menu');
+        menuDropdown.classList.remove("show");
     }
-    // IF USER CLICKS OUTSIDE OF LOG MODAL, CLOSE THE LOG
-    if (event.target == log) {
-        log.style.display = "none";
+    // CLOSE LOG
+    if (event.target == logModal) {
+        logModal.style.display = "none";
     }
 }
 
-// LOG MODAL
-var log = document.getElementById("log-modal");
 
+// FUNCTIONS
+function openMenu() {
+    menuIcon.classList.toggle("rotate-menu");
+    menuDropdown.classList.toggle("show");
+}
 function openLog() {
-    log.style.display = "block";
+    logModal.style.display = "block";
 }
-
 function closeLog() {
-    log.style.display = "none";
+    logModal.style.display = "none";
 }
