@@ -1,0 +1,63 @@
+.default-theme {
+    --primary: rgb(60, 50, 110);
+    --secondary: white;
+    --header: rgb(85, 70, 145);
+    --header-bar: rgb(35, 30, 65);
+    --tabs: lightgray;
+
+    --modal: lightgray;
+    --modal-table: black;
+
+    --btn-number: rgb(60, 50, 110);
+    --btn-operate: rgb(250, 190, 75);
+    --btn-activefocus: rgb(85, 70, 145);
+    --btn-special: rgb(60, 50, 110);
+}
+
+.aqua-theme {
+    --primary: rgb(25, 150, 195);
+    --secondary: white;
+    --header: rgb(0, 90, 125);
+    --header-bar: rgb(0, 55, 70);
+    --tabs: lightgray;
+
+    --modal: rgb(180, 160, 100);
+    --modal-table: rgb(0, 90, 125);
+
+    --btn-number: rgb(0, 120, 165);
+    --btn-operate: rgb(180, 160, 100);
+    --btn-activefocus: rgb(0, 55, 70);
+    --btn-special: rgb(0, 120, 165);
+}
+
+.lava-theme {
+    --primary: rgb(190, 38, 0);
+    --secondary: white;
+    --header: rgb(230, 95, 50);
+    --header-bar: rgb(35, 15, 0);
+    --tabs: gray;
+
+    --modal: lightgray;
+    --modal-table: black;
+
+    --btn-number: rgb(100, 100, 100);
+    --btn-operate: rgb(146, 0, 0);
+    --btn-activefocus: rgb(35, 15, 0);
+    --btn-special: rgb(100, 100, 100);
+}
+
+.earth-theme {
+    --primary: rgb(26, 141, 83);
+    --secondary: white;
+    --header: rgb(0, 201, 140);
+    --header-bar: rgb(0, 77, 38);
+    --tabs: lightgray;
+
+    --modal: lightgray;
+    --modal-table: black;
+
+    --btn-number: rgb(0, 190, 95);
+    --btn-operate: rgb(121, 98, 72);
+    --btn-activefocus: rgb(0, 77, 38);
+    --btn-special: rgb(0, 190, 95);
+}
