@@ -96,7 +96,7 @@ function updateOutput(show) {
         clearInputOutput();
         return;
     }
-    if (!show.includes('e')) {
+    if (!String(show).includes('e')) {
         show = parseFloat(show).toLocaleString('en-US');
     }
     else {

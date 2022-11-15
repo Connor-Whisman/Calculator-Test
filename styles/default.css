@@ -68,16 +68,12 @@ body, html {
     color: var(--header);
     border: 2px solid var(--header);
 }
-#button-equals:active, #button-equals:hover {
-    background-color: var(--btn-activefocus);
-    border: 2px solid var(--secondary);
-    color: var(--secondary);
-}
 .operator {
     background-color: var(--btn-operate);
     color: var(--header);
     border: 2px solid var(--header);
 }
+#button-equals:active, .decimal:hover,
 .operator:focus, .operator:hover {
     background-color: var(--btn-activefocus);
     border: 2px solid var(--secondary);

@@ -36,6 +36,7 @@ window.onclick = function(event) {
         logModal.style.display = 'none';
     }
 }
+// ADD TOUCHSTART EVENT TO ELEMENTS FOR MOBILE BROWSER SUPPORT
 window.onload = function() {
     if(/iP(hone|ad)/.test(window.navigator.userAgent)) {
         document.body.addEventListener('touchstart', function() {}, false);
