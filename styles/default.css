@@ -10,7 +10,7 @@ body, html {
 #header {
     background-color: var(--header);
     width: 100vw;
-    height: 15vh;
+    height: 9vh;
     margin: 0;
     padding: 0;
     /* top: 0;
