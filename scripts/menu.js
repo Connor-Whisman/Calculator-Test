@@ -36,6 +36,11 @@ window.onclick = function(event) {
         logModal.style.display = 'none';
     }
 }
+window.onload = function() {
+    if(/iP(hone|ad)/.test(window.navigator.userAgent)) {
+        document.body.addEventListener('touchstart', function() {}, false);
+    }
+}
 
 
 // FUNCTIONS

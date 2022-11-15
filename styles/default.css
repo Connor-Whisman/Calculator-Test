@@ -68,7 +68,7 @@ body, html {
     color: var(--header);
     border: 2px solid var(--header);
 }
-#button-equals:active {
+#button-equals:active, #button-equals:hover {
     background-color: var(--btn-activefocus);
     border: 2px solid var(--secondary);
     color: var(--secondary);
@@ -78,7 +78,7 @@ body, html {
     color: var(--header);
     border: 2px solid var(--header);
 }
-.operator:focus {
+.operator:focus, .operator:hover {
     background-color: var(--btn-activefocus);
     border: 2px solid var(--secondary);
     color: var(--secondary);
