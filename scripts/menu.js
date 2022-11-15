@@ -6,11 +6,12 @@ var logModal = document.getElementById('log-modal');
 var themeDropdown = document.getElementById('theme-dropdown');
 var fontDropdown = document.getElementById('font-dropdown');
 
-const body = document.getElementsByTagName("body")[0];
+const body = document.getElementsByTagName('body')[0];
 var currentTheme = 'default-theme';
-var currentFont = 'default-font';
-
 selectTheme(currentTheme);
+
+const all = document.getElementsByTagName('*');
+selectFont('arial');
 
 
 // EVENTS
@@ -56,4 +57,10 @@ function selectTheme(theme) {
     body.classList.remove(currentTheme);
     currentTheme = theme;
     body.classList.toggle(theme);
+}
+
+function selectFont(font) {
+    for (var i = 0; i < all.length; i++) {
+        all[i].style.fontFamily = font;
+    }
 }

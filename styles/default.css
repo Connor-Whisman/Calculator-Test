@@ -1,3 +1,4 @@
+
 body, html {
     background-color: var(--primary);
     /* max-height: 100vh;
@@ -51,12 +52,12 @@ body, html {
     display: grid;
     grid-template-columns: 22.5% 22.5% 22.5% 22.5%;
     grid-template-rows: 18% 18% 18% 18% 18%;
-    grid-column-gap: 2.5%;
+    grid-column-gap: 2%;
     grid-row-gap: 2%;
     justify-content: center;
 }
 .button {
-    font-size: 5vh;
+    font-size: 3vmax;
     border-radius: 50vw;
 }
 .button:active {
@@ -100,10 +101,10 @@ body, html {
 
 /* ------------------ MENU ------------------ */
 #menu-icon {
-    width: 10vmin;
-    height: 10vmin;
-    margin-top: 5vmin;
-    margin-left: 5vmin;
+    width: 8vmin;
+    height: 8vmin;
+    margin-top: 1vmin;
+    margin-left: 2vmin;
     display: inline-block;
     background-image: url('../images/menu.png');
     background-repeat: no-repeat;
@@ -115,7 +116,7 @@ body, html {
     display: none;
     position: absolute;
     background-color: var(--tabs);
-    min-width: 25vmin;
+    min-width: 30vmin;
     z-index: 1;
     border-radius: 1vmax;
 }
@@ -125,7 +126,7 @@ body, html {
     text-align: left;
     text-decoration: none;
     display: block;
-    min-width: 25vmin;
+    min-width: 30vmin;
     font-weight: bold;
     
 }
