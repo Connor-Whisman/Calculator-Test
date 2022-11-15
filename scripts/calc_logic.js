@@ -15,7 +15,10 @@ function updateOperator(symbol) {
     }
     // CALCULATE
     if (operator !== undefined && recentInput !== undefined) {
-        getSolution(recentInput);
+        let preSolve = recentInput;
+        recentInput = calculate();
+        logCalculation(preSolve, operator, initialInput, recentInput);
+        updateOutput(recentInput);
     }
     // STORE INITIAL INPUT
     else {
@@ -26,24 +29,17 @@ function updateOperator(symbol) {
     operator = symbol;
     lastAction = 'operator';
 }
-function getSolution(input) {
+function getSolution() {
     if (operator == undefined) {
         clearInputOutput();
         return;
     }
-    // USER CLICKED '=' BUTTON
-    if (input == initialInput) {
-        initialInput = calculate();
-        logCalculation(recentInput, operator, input, initialInput);
-        updateOutput(initialInput);
-    }
-    // USER DOING NEW CALCULATION ON RESULT OF THE PREVIOUS ONE 
-    else {
-        recentInput = calculate();
-        logCalculation(input, operator, initialInput, recentInput);
-        updateOutput(recentInput);
-    }
+    let preSolve = initialInput;
+    initialInput = calculate();
+    updateOutput(initialInput);
+    logCalculation(recentInput, operator, preSolve, initialInput);
     operator = undefined;
+    lastAction = 'solve';
 }
 function calculate() {
     let answer;
@@ -61,10 +57,6 @@ function calculate() {
             answer = String(parseFloat(recentInput) / parseFloat(initialInput));
             break;
     }
-    // SHORTEN SCIENTIFIC NOTATION NUMBERS
-    if (answer.includes('e+')) {
-        answer = String(parseFloat(answer).toPrecision(8));
-    }
     lastAction = operator;
     return answer;
 }
@@ -73,7 +65,7 @@ function calculate() {
 function updateInput(char) {
     // CHECK FOR REPEATED DECIMAL INPUTS | MAX OF 18-DIGIT NUMBER | DONT APPEND DIGITS TO A RESULT
     if (lastAction !== 'append') {initialInput = '0'}
-    if ((initialInput.includes('.') && char == '.') || initialInput.length > 18) return;
+    if ((initialInput.includes('.') && char == '.') || initialInput.length >= 21) return;
     if (initialInput == '0') {
         if (char == '.') {
             initialInput += char;
@@ -103,6 +95,12 @@ function updateOutput(show) {
     if (show == 'NaN') {
         clearInputOutput();
         return;
+    }
+    if (!show.includes('e')) {
+        show = parseFloat(show).toLocaleString('en-US');
+    }
+    else {
+        show = parseFloat(show).toPrecision();
     }
     document.getElementById("output").innerHTML = show;
 }

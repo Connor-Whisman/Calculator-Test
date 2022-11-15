@@ -7,9 +7,8 @@
         <title>Calculator v.1.0</title>
         <link rel="stylesheet" href="styles/default.css">
         <link rel="stylesheet" href="styles/themes.css">
-        <link rel="stylesheet" href="styles/fonts.css">
     </head>
-    <body>
+    <body ontouchstart="">
         <!--- HEADER SPACE & DROPDOWN MENU --->
         <div id="header">
             <div onclick="openMenu()" id="menu-icon"></div>
@@ -52,7 +51,8 @@
                 <button class="button number"   onclick="updateInput('1')">1</button>
                 <button class="button number"   onclick="updateInput('2')">2</button>
                 <button class="button number"   onclick="updateInput('3')">3</button>
-                <button class="button" id="button-equals" onclick="getSolution(initialInput)">=</button>
+                <!-- <button class="button" id="button-equals" onclick="getSolution(initialInput)">=</button> -->
+                <button class="button" id="button-equals" onclick="getSolution()">=</button>
                 <button class="button number" id="button-zero" onclick="updateInput('0')">0</button>
                 <button class="button number"   onclick="updateInput('.')">.</button>
             </div>
