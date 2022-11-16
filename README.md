@@ -4,7 +4,7 @@ A basic calculator app built with JavaScript and HTML/CSS, so that it can be rea
 Features:
 ---------
 - Add, Subtract, Multiply, and Divide; Small or large numbers. Displays anything more than 21 digits in scientific notation.
-- Supports negative numbers using the '-+' button. 
+- Supports negative numbers. Turn the entered value negative by clicking the '-+' button.
 - Repeat a calculation on the output of the previous calculation, just press '=' again.
 - All calculations are saved and able to be viewed in the log, in the order of most recent first. Negative numbers are logged within parenthesis.
 - UI customization settings; Change color or font to any of the included presets.
