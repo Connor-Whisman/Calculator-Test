@@ -30,4 +30,4 @@ Azure link: https://mango-dune-0ac614110.2.azurestaticapps.net/
 
 In Conclusion:
 --------------
-I really enjoyed putting this project together! It seems like it would be pretty simple at first, but it definitely tested my skills in more than one way. I think the biggest thing I've learned from it, is that it's time to learn a front-end framework for my web developement projects. I've begun to read up on React.js and am looking forward to being knowledgeable in how the modern-day, front-end developer approches things.
+I really enjoyed putting this project together! It seems like it would be pretty simple at first, but it definitely tested my skills in more than one way. I think my biggest takeaway is that it's time to learn a front-end framework for web developement projects. I've begun to read up on React.js and am looking forward to being knowledgeable in how the modern-day, front-end developer approches things.
