@@ -5,6 +5,7 @@ var operator;
 var lastAction;
 var preSolve;
 var toCalc;
+
 updateOutput(initialInput);
 
 // ------ LOGICAL FUNCTIONS ------
@@ -15,9 +16,9 @@ function updateOperator(symbol) {
         return;
     }
     // CALCULATE
-    if (operator !== undefined && recentInput !== undefined) {
-        let preSolve = recentInput;
-        recentInput = calculate();
+    if (operator !== undefined && lastAction !== 'solve') {
+        preSolve = recentInput;
+        recentInput = calculate(preSolve, initialInput);
         logCalculation(preSolve, operator, initialInput, recentInput);
         updateOutput(recentInput);
     }
@@ -35,25 +36,21 @@ function getSolution() {
         clearInputOutput();
         return;
     }
-    
-    // if (lastAction == 'solve') {
-    //     recentInput = initialInput;
-    //     initialInput = preSolve;
-    //     toCalc = calculate();
-    //     updateOutput(toCalc);
-    //     logCalculation(recentInput, operator, preSolve, toCalc);
-    //     lastAction = 'solve';
-    //     return;
-    // }
+    if (lastAction == 'solve') {
+        let new_pre = initialInput;
+        initialInput = calculate(new_pre, preSolve);
+        logCalculation(new_pre, operator, preSolve, initialInput);
+        updateOutput(initialInput);
+        lastAction = 'solve';
+        return;
+    }
     preSolve = initialInput;
-    initialInput = calculate();
+    initialInput = calculate(recentInput, preSolve);
     logCalculation(recentInput, operator, preSolve, initialInput);
     updateOutput(initialInput);
-    operator = undefined;
-    // toCalc = preSolve;
     lastAction = 'solve';
 }
-function calculate() {
+function calculate(recentInput, initialInput) {
     let answer;
     switch(operator) {
         case '+':
@@ -69,8 +66,14 @@ function calculate() {
             answer = String((parseFloat(recentInput) / parseFloat(initialInput)).toPrecision());
             break;
     }
-    lastAction = operator;
     return answer;
+}
+function repeatCalc() {
+    recentInput = initialInput;
+    initialInput = calculate(recentInput, preSolve);
+    updateOutput(initialInput);
+    logCalculation(recentInput, operator, preSolve, initialInput);
+    lastAction = 'solve';
 }
 
 // ------- INPUT / OUTPUT FUNCTIONS ------
@@ -105,7 +108,7 @@ function clearInputOutput() {
 function updateOutput(show) {
     let toStr = String(show);
     // CHECK FOR NON NUMBERS BEFORE DISPLAYING EX: 0/0=NaN
-    if (show == 'NaN') {
+    if (toStr == 'NaN') {
         clearInputOutput();
         return;
     }
