@@ -4,7 +4,6 @@ var recentInput;
 var operator;
 var lastAction;
 var preSolve;
-var toCalc;
 
 updateOutput(initialInput);
 
@@ -37,9 +36,9 @@ function getSolution() {
         return;
     }
     if (lastAction == 'solve') {
-        let new_pre = initialInput;
-        initialInput = calculate(new_pre, preSolve);
-        logCalculation(new_pre, operator, preSolve, initialInput);
+        let placeholder = initialInput;
+        initialInput = calculate(placeholder, preSolve);
+        logCalculation(placeholder, operator, preSolve, initialInput);
         updateOutput(initialInput);
         lastAction = 'solve';
         return;
@@ -82,11 +81,7 @@ function updateInput(char) {
     if (lastAction !== 'append') {initialInput = '0'}
     if ((String(initialInput).includes('.') && char == '.') || initialInput.length >= 21) return;
     if (initialInput == '0') {
-        if (char == '.') {
-            initialInput += char;
-        } else {
-            initialInput = char;
-        }
+        char == '.' ? initialInput += char : initialInput = char;
     } else {
         initialInput += char;
     }
@@ -140,22 +135,13 @@ function logCalculation(initialInput, operand, recentInput, solution) {
 }
 function addZero(input) {
     // LEADING 0 FOR SINGLE DIDGIT INTS DISPLAYING TIME
-    if (input < 10) {
-        input = '0' + input
-    }
+    input < 10 ? input = '0' + input : input;
     return input;
 }
 function formatLog(input) {
-    if (String(input).includes('.')) {
-        input = splitter(input);
-    }
-    else {
-        input = addCommas(input);
-    }
+    String(input).includes('.') ? input = splitter(input) : input = addCommas(input);
     // ADD PARENTHESIS TO NEGATIVE NUMBERS
-    if (parseFloat(input) < 0) {
-        input = `(${input})`;
-    }
+    parseFloat(input) < 0 ? input = `(${input})` : input;
     return input;
 }
 function addCommas(input) {
