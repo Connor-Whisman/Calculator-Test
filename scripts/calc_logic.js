@@ -3,7 +3,8 @@ var initialInput = '0';
 var recentInput;
 var operator;
 var lastAction;
-
+var preSolve;
+var toCalc;
 updateOutput(initialInput);
 
 // ------ LOGICAL FUNCTIONS ------
@@ -34,27 +35,38 @@ function getSolution() {
         clearInputOutput();
         return;
     }
-    let preSolve = initialInput;
+    
+    // if (lastAction == 'solve') {
+    //     recentInput = initialInput;
+    //     initialInput = preSolve;
+    //     toCalc = calculate();
+    //     updateOutput(toCalc);
+    //     logCalculation(recentInput, operator, preSolve, toCalc);
+    //     lastAction = 'solve';
+    //     return;
+    // }
+    preSolve = initialInput;
     initialInput = calculate();
-    updateOutput(initialInput);
     logCalculation(recentInput, operator, preSolve, initialInput);
+    updateOutput(initialInput);
     operator = undefined;
+    // toCalc = preSolve;
     lastAction = 'solve';
 }
 function calculate() {
     let answer;
     switch(operator) {
         case '+':
-            answer = String(parseFloat(recentInput) + parseFloat(initialInput));
+            answer = String((parseFloat(recentInput) + parseFloat(initialInput)).toPrecision());
             break;
         case '-':
-            answer = String(parseFloat(recentInput) - parseFloat(initialInput));
+            answer = String((parseFloat(recentInput) - parseFloat(initialInput)).toPrecision());
             break;
         case '*':
-            answer = String(parseFloat(recentInput) * parseFloat(initialInput));
+            answer = String((parseFloat(recentInput) * parseFloat(initialInput)).toPrecision());
             break;
         case '/':
-            answer = String(parseFloat(recentInput) / parseFloat(initialInput));
+            answer = String((parseFloat(recentInput) / parseFloat(initialInput)).toPrecision());
             break;
     }
     lastAction = operator;
@@ -63,9 +75,9 @@ function calculate() {
 
 // ------- INPUT / OUTPUT FUNCTIONS ------
 function updateInput(char) {
-    // CHECK FOR REPEATED DECIMAL INPUTS | MAX OF 18-DIGIT NUMBER | DONT APPEND DIGITS TO A RESULT
+    // DONT APPEND DIGITS TO A RESULT | CHECK FOR REPEATED DECIMAL INPUTS | MAX OF 21-DIGIT NUMBER 
     if (lastAction !== 'append') {initialInput = '0'}
-    if ((initialInput.includes('.') && char == '.') || initialInput.length >= 21) return;
+    if ((String(initialInput).includes('.') && char == '.') || initialInput.length >= 21) return;
     if (initialInput == '0') {
         if (char == '.') {
             initialInput += char;
@@ -91,35 +103,64 @@ function clearInputOutput() {
     updateOutput(initialInput);
 }
 function updateOutput(show) {
+    let toStr = String(show);
     // CHECK FOR NON NUMBERS BEFORE DISPLAYING EX: 0/0=NaN
     if (show == 'NaN') {
         clearInputOutput();
         return;
     }
-    if (!String(show).includes('e')) {
-        show = parseFloat(show).toLocaleString('en-US');
+    if (parseFloat(show) == 0) {
+        document.getElementById("output").innerHTML = show;
+        return;
+    }
+    else if (toStr.includes('.') && !toStr.includes('e')) {
+        show = splitter(show);
+    }
+    else if (!toStr.includes('e')) {
+        show = addCommas(show);
     }
     else {
-        show = parseFloat(show).toPrecision();
+        show = parseFloat(show).toPrecision(10);
     }
     document.getElementById("output").innerHTML = show;
 }
 
-// ------ LOG FUNCTIONS ------
-function logCalculation(recentInput, operand, initialInput, solution) {
+// ------ LOG / FORMAT FUNCTIONS ------
+function logCalculation(initialInput, operand, recentInput, solution) {
     let now = new Date();
     let time = `${addZero(now.getHours())}:${addZero(now.getMinutes())}:${addZero(now.getSeconds())}`;
-    let log = `${addParenthesis(recentInput)} ${operand} ${addParenthesis(initialInput)} = ${solution}`;
+    let log = `${formatLog(initialInput)} ${operand} ${formatLog(recentInput)} = ${formatLog(solution)}`;
     
     let tableRow = document.getElementById("log-table").insertRow(1);
     tableRow.insertCell(0).innerHTML = time;
     tableRow.insertCell(1).innerHTML = log;
 }
 function addZero(input) {
-    if (input < 10) {input = '0' + input}
+    // LEADING 0 FOR SINGLE DIDGIT INTS DISPLAYING TIME
+    if (input < 10) {
+        input = '0' + input
+    }
     return input;
 }
-function addParenthesis(input) {
-    if (input < 0) {input = `(${input})`}
+function formatLog(input) {
+    if (String(input).includes('.')) {
+        input = splitter(input);
+    }
+    else {
+        input = addCommas(input);
+    }
+    // ADD PARENTHESIS TO NEGATIVE NUMBERS
+    if (parseFloat(input) < 0) {
+        input = `(${input})`;
+    }
+    return input;
+}
+function addCommas(input) {
+    return parseFloat(input).toLocaleString('en-US');
+}
+function splitter(input) {
+    // CORRECTLY FORMATS LARGE NUMBERS THAT INCLUDE A DECIMAL
+    let splat = String(input).split('.');
+    input = `${addCommas(splat[0])}.${splat[1]}`
     return input;
 }
